@@ -49,11 +49,17 @@ button:hover {
 }
 
 /* Position the front and back side */
-.front, .back {
+.front, .back{
   position: absolute;
   width: 200px;
   height: 200px;
-  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+.hidden {
+  position: relative;
+  width: 200px;
+  height: 200px;
   backface-visibility: hidden;
 }
 

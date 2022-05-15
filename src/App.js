@@ -23,6 +23,7 @@ function App() {
       .map((card) => {
         return { ...card, id: Math.random(), state: false, hidden: false };
       });
+
     setCards(shuffledCards);
     setTurns(0);
     console.log(cards, turns);
@@ -47,11 +48,12 @@ function App() {
         });
       });
       setCanFlip(true);
-    }, 1000);
+    }, 500);
   };
 
   const handleFlip = (c) => {
     if (!canFlip) return;
+    console.log(c);
     const newArr = cards.map((card) => {
       if (card.id === c.id) {
         if (!card.state) setTurns(turns + 1);
@@ -60,7 +62,6 @@ function App() {
       return card;
     });
     setCards(newArr);
-
     checkMatch(newArr);
   };
 
@@ -69,7 +70,7 @@ function App() {
       return card.hidden;
     });
 
-    if (done.length == 12) return true;
+    if (done.length === 12) return true;
     return false;
   };
 
@@ -80,12 +81,12 @@ function App() {
 
       <div className="card-grid">
         {cards.map((card) => (
+          !card.hidden ? (
           <div
             className={`flip-card ${card.state && "flip"}`}
             key={card.id}
             onClick={() => handleFlip(card)}
           >
-            {!card.hidden && (
               <div className="flip-card-inner">
                 <div className="front">
                   <img src="../img/cover.png" alt="card-front" />
@@ -94,9 +95,16 @@ function App() {
                 <div className="back">
                   <img src={card.src} alt="card-back" />
                 </div>
-              </div>
-            )}
-          </div>
+              </div>          
+          </div>) : 
+          (<div
+            className={`flip-card ${card.state && "flip"}`}
+            key={card.id}
+          >
+            <div className="hidden">
+              Go suck a dick!
+            </div>
+          </div>)
         ))}
       </div>
       {checkWin() ? (
@@ -106,11 +114,11 @@ function App() {
         </div>
       ) : (
         <div style={{ textAlign: "center", width: "100%" }}>
-          Your turn: {turns}
+          Turn count: {turns}
         </div>
       )}
     </div>
   );
 }
-// This is to make the file different for me to test the git commands
+
 export default App;
